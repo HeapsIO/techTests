@@ -1,0 +1,5 @@
+-lib heaps
+-lib hldx
+-hl out.hl
+-main DxSamplers
+-D shader-debug-dump
