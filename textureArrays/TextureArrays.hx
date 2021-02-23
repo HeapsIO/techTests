@@ -73,10 +73,7 @@ class TextureArrays extends hxd.App {
 	function testMipMaps(x: Int, y: Int) {
 		var size = 512;
 
-		var flags : Array<h3d.mat.Data.TextureFlags> = [MipMapped];
-		#if hldx
-		flags.push(ManualMipMapGen);  // Only on DX, GL apparently requires generateMipMaps to be called before mip levels are uploaded, or throws an INVALID_VALUE
-		#end
+		var flags : Array<h3d.mat.Data.TextureFlags> = [MipMapped, ManualMipMapGen];
 		var tex = new h3d.mat.TextureArray(size, size, 2, flags, RGBA);
 
 		var mipLevel = 0;
@@ -108,10 +105,7 @@ class TextureArrays extends hxd.App {
 		if(!t1.format.equals(t2.format))
 			throw "!";
 
-		var flags : Array<h3d.mat.Data.TextureFlags> = [MipMapped];
-		#if hldx
-		flags.push(ManualMipMapGen);  // Only on DX, GL apparently requires generateMipMaps to be called before mip levels are uploaded, or throws an INVALID_VALUE
-		#end
+		var flags : Array<h3d.mat.Data.TextureFlags> = [MipMapped, ManualMipMapGen];
 		var tex = new h3d.mat.TextureArray(t1.width, t1.height, 2, flags, t1.format);
 		for(i in 0...tex.mipLevels) {
 			tex.uploadPixels(i1.getPixels(tex.format, false, i), i, 0);
