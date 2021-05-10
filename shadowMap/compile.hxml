@@ -1,4 +1,5 @@
 -lib heaps
 -lib hlsdl
 -hl out.hl
+-D resourcesPas=res
 -main ShadowMap

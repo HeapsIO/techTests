@@ -6,6 +6,7 @@ class ShadowMap extends hxd.App {
 	var light : h3d.scene.pbr.DirLight;
 	var shadows : h3d.pass.DirShadowMap;
 	var displayMap : h2d.Bitmap;
+	var event = new hxd.WaitEvent();
 
 	override function init() {
 		s2d.defaultSmooth = true;
@@ -20,25 +21,22 @@ class ShadowMap extends hxd.App {
 			m.scaleZ = z;
 		}
 
-		var mesh = new h3d.scene.Mesh(cube, s3d);
-		scale(mesh, 2, 3, 4);
-		mesh.material.color.setColor(0x102040);
-		mesh.z = 3;
-		meshes.push(mesh);
-
-		var mesh = new h3d.scene.Mesh(cube, s3d);
-		scale(mesh, 5, 10, 3);
-		mesh.material.color.setColor(0x402010);
-		mesh.z = 1.5;
-		mesh.x = 12;
-		mesh.rotate(0,0,Math.PI/4);
-		meshes.push(mesh);
+		var rnd = new hxd.Rand(0);
+		for(i in 0...50) {
+			var mesh = new h3d.scene.Mesh(cube, s3d);
+			scale(mesh, 4, 4, rnd.rand() * 30);
+			mesh.material.color.setColor(0x102040);
+			mesh.setPosition(rnd.srand() * 100, rnd.srand() * 100, mesh.scaleZ/2);
+			mesh.cullingCollider = mesh.getBounds();
+			meshes.push(mesh);
+		}
 
 		light = new h3d.scene.pbr.DirLight(new h3d.Vector(0.2,-0.3,-0.5), s3d);
 		light.power = 3;
 		light.shadows.mode = Dynamic;
 		shadows = cast light.shadows;
 		shadows.autoZPlanes = true;
+		shadows.autoShrink = true;
 
 		var tile = 16;
 		var floor = new h3d.prim.Cube(tile - 0.05,tile - 0.05,0.1,true);
@@ -51,14 +49,27 @@ class ShadowMap extends hxd.App {
 				floor.y = y * tile;
 				//floor.material.castShadows = false;
 				floor.material.color.setColor(0x204020);
+				floor.cullingCollider = floor.getBounds();
 			}
 
 		displayMap = new h2d.Bitmap(null, s2d);
 		displayMap.colorKey = 0xFF0000;
-		displayMap.width = 128;
+		displayMap.width = 256;
 
 		var ctrl = new h3d.scene.CameraController(30,s3d);
+		event.waitUntil(function(dt) {
+			@:privateAccess ctrl.targetOffset.z = 0;
+			return false;
+		});
+
 		haxe.Timer.delay(drawVolumes,0);
+
+		var txt = new h2d.Text(hxd.Res.debug_font.toFont(), s2d);
+		txt.x = 300;
+		event.waitUntil(function(dt) {
+			txt.text = 'Draw calls: ${h3d.Engine.getCurrent().drawCalls}';
+			return false;
+		});
 	}
 
 	function addPoint(x,y,z) {
@@ -134,6 +145,7 @@ class ShadowMap extends hxd.App {
 		super.update(dt);
 		if( hxd.Key.isPressed(hxd.Key.SPACE) )
 			drawVolumes();
+		event.update(dt);
 	}
 
 	function getCamZ( dist : Float ) {
@@ -141,6 +153,7 @@ class ShadowMap extends hxd.App {
 	}
 
 	static function main() {
+		hxd.Res.initLocal();
 		h3d.mat.PbrMaterialSetup.set();
 		new ShadowMap();
 	}
