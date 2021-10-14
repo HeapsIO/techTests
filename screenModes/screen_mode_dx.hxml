@@ -1,0 +1,5 @@
+-lib heaps
+-lib hldx
+-hl screen_mode.hl
+-D hl-ver=1.12.0
+-main ScreenMode
