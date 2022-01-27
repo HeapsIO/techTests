@@ -1,0 +1,7 @@
+-lib heaps
+-lib hldx
+-lib hide
+-hl out.hl
+-main Test
+-D shader-debug-dump
+#-D debugInst

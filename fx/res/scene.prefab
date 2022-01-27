@@ -1,0 +1,16 @@
+{
+	"type": "prefab",
+	"children": [
+		{
+			"type": "model",
+			"name": "Model",
+			"source": "Kobold01/Model.FBX",
+			"enabled": false
+		},
+		{
+			"type": "reference",
+			"name": "emitter",
+			"source": "emitter.fx"
+		}
+	]
+}
