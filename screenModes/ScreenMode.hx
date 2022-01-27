@@ -38,9 +38,11 @@ class ScreenMode extends hxd.App {
 	function setDisplayMode(m:hxd.Window.DisplayMode) {
 		#if (hl_ver >= version("1.12.0"))
 		if(hxd.Window.getInstance().displayMode == Windowed && m != Windowed) {
-			var cdm = hxd.Window.getInstance().getCurrentDisplaySetting();
 			hxd.Window.getInstance().displayMode = m;
-			hxd.Window.getInstance().resize(cdm.width, cdm.height);
+			var cdm = hxd.Window.getInstance().getCurrentDisplaySetting();
+			if(cdm != null) {
+				hxd.Window.getInstance().resize(cdm.width, cdm.height);
+			}
 		}
 		else
 			hxd.Window.getInstance().displayMode = m;
