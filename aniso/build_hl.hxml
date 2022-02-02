@@ -1,0 +1,8 @@
+-lib heaps
+-lib hide
+-lib hlsdl
+-hl main.hl
+-main Main
+-D windowSize=1880x1010
+-D no-deprecation-warnings
+--macro include("hrt.prefab")

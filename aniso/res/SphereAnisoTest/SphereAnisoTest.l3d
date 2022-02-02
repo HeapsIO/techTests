@@ -1,0 +1,99 @@
+{
+	"type": "level3d",
+	"children": [
+		{
+			"type": "renderProps",
+			"name": "renderProps",
+			"props": {
+				"PBR": {
+					"mode": "Pbr",
+					"emissive": 1,
+					"exposure": 0,
+					"sky": "Background",
+					"tone": "Linear",
+					"occlusion": 1,
+					"shadows": true,
+					"envColorHigh": 0,
+					"envColorLow": 0,
+					"envColorBack": 0,
+					"envColorBlend": 0,
+					"envColorSaturation": 0,
+					"envPower": 0
+				}
+			},
+			"children": [
+				{
+					"type": "rfx.sao",
+					"name": "sao",
+					"blur": 5,
+					"samples": 30,
+					"radius": 1,
+					"intensity": 1.44,
+					"bias": 0.1
+				},
+				{
+					"type": "gamebloom",
+					"name": "gamebloom",
+					"threshold": 1,
+					"intensity": 0.02,
+					"blur": 13.33
+				}
+			]
+		},
+		{
+			"type": "environment",
+			"name": "environment",
+			"sourceMapPath": "SphereAnisoTest/HDR/museum_of_ethnography_1k.hdr"
+		},
+		{
+			"type": "model",
+			"name": "SpheresAnisoTest",
+			"source": "SphereAnisoTest/SpheresAnisoTest.fbx",
+			"children": [
+				{
+					"type": "material",
+					"name": "material",
+					"props": {
+						"PBR": {
+							"mode": "Forward",
+							"blend": "None",
+							"shadows": true,
+							"culling": "Back",
+							"depthTest": "Less",
+							"colorMask": 15,
+							"enableStencil": false
+						}
+					},
+					"children": [
+						{
+							"type": "anisotropy",
+							"name": "anisotropy",
+							"intensity": 0.11,
+							"direction": 237.27
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "light",
+			"name": "light_0",
+			"y": -4.69,
+			"z": 2.91,
+			"rotationY": 23,
+			"rotationZ": 71,
+			"kind": "Directional",
+			"power": 2.42,
+			"range": 10,
+			"zNear": 0.02
+		},
+		{
+			"type": "camera",
+			"name": "camera",
+			"y": 8.9,
+			"z": 9.13,
+			"rotationY": -49.1,
+			"rotationZ": 90
+		}
+	]
+}
