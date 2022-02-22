@@ -49,6 +49,7 @@
 			"type": "model",
 			"name": "SpheresAnisoTest",
 			"source": "SphereAnisoTest/SpheresAnisoTest.fbx",
+			"z": 1.31,
 			"children": [
 				{
 					"type": "material",
@@ -76,6 +77,31 @@
 			]
 		},
 		{
+			"type": "model",
+			"name": "SpheresAnisoTest",
+			"source": "SphereAnisoTest/SpheresAnisoTest.fbx",
+			"x": -2.19,
+			"y": 1.96,
+			"z": -0.73,
+			"children": [
+				{
+					"type": "material",
+					"name": "material",
+					"props": {
+						"PBR": {
+							"mode": "Forward",
+							"blend": "None",
+							"shadows": true,
+							"culling": "Back",
+							"depthTest": "Less",
+							"colorMask": 15,
+							"enableStencil": false
+						}
+					}
+				}
+			]
+		},
+		{
 			"type": "light",
 			"name": "light_0",
 			"y": -4.69,
@@ -85,7 +111,20 @@
 			"kind": "Directional",
 			"power": 2.42,
 			"range": 10,
-			"zNear": 0.02
+			"zNear": 0.02,
+			"shadows": {
+				"mode": "Dynamic",
+				"size": 2048,
+				"radius": 0,
+				"quality": 1,
+				"bias": 0.1,
+				"samplingMode": {
+					"kind": "PCF",
+					"quality": 3,
+					"scale": 6.36,
+					"bias": 0.1
+				}
+			}
 		},
 		{
 			"type": "camera",
