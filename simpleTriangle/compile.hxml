@@ -1,0 +1,4 @@
+-lib heaps
+-lib hlsdl
+-hl out.hl
+-main SimpleTriangle
