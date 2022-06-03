@@ -5,7 +5,7 @@
 			"type": "modelLib",
 			"name": "modelLib",
 			"bakedMaterials": {
-				"castle/castle_hall.fbx_stone_wall": {
+				"castle/castle_hall.hmd_stone_wall": {
 					"indexStart": 0,
 					"indexCount": 3438,
 					"geomId": 1,
@@ -16,7 +16,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_hall.fbx_props_spe": {
+				"castle/castle_hall.hmd_props_spe": {
 					"indexStart": 3438,
 					"indexCount": 23664,
 					"geomId": 1,
@@ -27,7 +27,7 @@
 					"uvSY": 0.125,
 					"configIndex": 0
 				},
-				"castle/castle_hall.fbx_tiles_roof": {
+				"castle/castle_hall.hmd_tiles_roof": {
 					"indexStart": 27102,
 					"indexCount": 1554,
 					"geomId": 1,
@@ -38,7 +38,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_hall.fbx_woodplanks": {
+				"castle/castle_hall.hmd_woodplanks": {
 					"indexStart": 28656,
 					"indexCount": 876,
 					"geomId": 1,
@@ -49,7 +49,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower01.fbx_props_spe": {
+				"castle/castle_tower01.hmd_props_spe": {
 					"indexStart": 29532,
 					"indexCount": 2784,
 					"geomId": 2,
@@ -60,7 +60,7 @@
 					"uvSY": 0.125,
 					"configIndex": 0
 				},
-				"castle/castle_tower01.fbx_woodplanks": {
+				"castle/castle_tower01.hmd_woodplanks": {
 					"indexStart": 32316,
 					"indexCount": 2724,
 					"geomId": 2,
@@ -71,7 +71,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower01.fbx_stone_wall": {
+				"castle/castle_tower01.hmd_stone_wall": {
 					"indexStart": 35040,
 					"indexCount": 2040,
 					"geomId": 2,
@@ -82,7 +82,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower01.fbx_tiles_roof": {
+				"castle/castle_tower01.hmd_tiles_roof": {
 					"indexStart": 37080,
 					"indexCount": 2004,
 					"geomId": 2,
@@ -93,7 +93,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower02.fbx_woodplanks": {
+				"castle/castle_tower02.hmd_woodplanks": {
 					"indexStart": 39084,
 					"indexCount": 126,
 					"geomId": 3,
@@ -104,7 +104,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower02.fbx_props_spe": {
+				"castle/castle_tower02.hmd_props_spe": {
 					"indexStart": 39210,
 					"indexCount": 3840,
 					"geomId": 3,
@@ -115,7 +115,7 @@
 					"uvSY": 0.125,
 					"configIndex": 0
 				},
-				"castle/castle_tower02.fbx_stone_wall": {
+				"castle/castle_tower02.hmd_stone_wall": {
 					"indexStart": 43050,
 					"indexCount": 672,
 					"geomId": 3,
@@ -126,7 +126,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_tower02.fbx_tiles_roof": {
+				"castle/castle_tower02.hmd_tiles_roof": {
 					"indexStart": 43722,
 					"indexCount": 732,
 					"geomId": 3,
@@ -137,7 +137,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_wall_arc.fbx_woodplanks": {
+				"castle/castle_wall_arc.hmd_woodplanks": {
 					"indexStart": 44454,
 					"indexCount": 1908,
 					"geomId": 4,
@@ -148,7 +148,7 @@
 					"uvSY": 0.5,
 					"configIndex": 0
 				},
-				"castle/castle_wall_arc.fbx_props_spe": {
+				"castle/castle_wall_arc.hmd_props_spe": {
 					"indexStart": 46362,
 					"indexCount": 13644,
 					"geomId": 4,
@@ -159,7 +159,7 @@
 					"uvSY": 0.125,
 					"configIndex": 0
 				},
-				"castle/castle_wall_arc.fbx_stone_wall": {
+				"castle/castle_wall_arc.hmd_stone_wall": {
 					"indexStart": 60006,
 					"indexCount": 1392,
 					"geomId": 4,
