@@ -5,57 +5,51 @@
 			"type": "modelLib",
 			"name": "modelLib",
 			"bakedMaterials": {
-				"stone_wall1": {
+				"castle/castle_hall.fbx_stone_wall": {
 					"indexStart": 0,
-					"indexCount": 2904,
+					"indexCount": 3438,
 					"geomId": 1,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"props_spe": {
-					"indexStart": 2904,
+				"castle/castle_hall.fbx_props_spe": {
+					"indexStart": 3438,
 					"indexCount": 23664,
 					"geomId": 1,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0,
 					"uvSX": 0.125,
-					"uvSY": 0.125
+					"uvSY": 0.125,
+					"configIndex": 0
 				},
-				"tiles_roof4": {
-					"indexStart": 26568,
+				"castle/castle_hall.fbx_tiles_roof": {
+					"indexStart": 27102,
 					"indexCount": 1554,
 					"geomId": 1,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"Wood5": {
-					"indexStart": 28122,
+				"castle/castle_hall.fbx_woodplanks": {
+					"indexStart": 28656,
 					"indexCount": 876,
 					"geomId": 1,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"stone_wall4": {
-					"indexStart": 28998,
-					"indexCount": 534,
-					"geomId": 1,
-					"texId": 0,
-					"uvX": 0,
-					"uvY": 0,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"props_spe_2": {
+				"castle/castle_tower01.fbx_props_spe": {
 					"indexStart": 29532,
 					"indexCount": 2784,
 					"geomId": 2,
@@ -63,149 +57,98 @@
 					"uvX": 0.5,
 					"uvY": 0,
 					"uvSX": 0.125,
-					"uvSY": 0.125
+					"uvSY": 0.125,
+					"configIndex": 0
 				},
-				"Wood": {
+				"castle/castle_tower01.fbx_woodplanks": {
 					"indexStart": 32316,
-					"indexCount": 1932,
+					"indexCount": 2724,
 					"geomId": 2,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"stone_wall1_2": {
-					"indexStart": 34248,
-					"indexCount": 1920,
+				"castle/castle_tower01.fbx_stone_wall": {
+					"indexStart": 35040,
+					"indexCount": 2040,
 					"geomId": 2,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"tiles_roof": {
-					"indexStart": 36168,
+				"castle/castle_tower01.fbx_tiles_roof": {
+					"indexStart": 37080,
 					"indexCount": 2004,
 					"geomId": 2,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"woodplanks": {
-					"indexStart": 38172,
-					"indexCount": 768,
-					"geomId": 2,
-					"texId": 0,
-					"uvX": 0.5,
-					"uvY": 0.5,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"stone_wall": {
-					"indexStart": 38940,
-					"indexCount": 120,
-					"geomId": 2,
-					"texId": 0,
-					"uvX": 0,
-					"uvY": 0,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"Wood1": {
-					"indexStart": 39060,
-					"indexCount": 24,
-					"geomId": 2,
-					"texId": 0,
-					"uvX": 0.5,
-					"uvY": 0.5,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"Wood10": {
+				"castle/castle_tower02.fbx_woodplanks": {
 					"indexStart": 39084,
-					"indexCount": 102,
+					"indexCount": 126,
 					"geomId": 3,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"props_spe2": {
-					"indexStart": 39186,
+				"castle/castle_tower02.fbx_props_spe": {
+					"indexStart": 39210,
 					"indexCount": 3840,
 					"geomId": 3,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0,
 					"uvSX": 0.125,
-					"uvSY": 0.125
+					"uvSY": 0.125,
+					"configIndex": 0
 				},
-				"stone_wall5": {
-					"indexStart": 43026,
+				"castle/castle_tower02.fbx_stone_wall": {
+					"indexStart": 43050,
 					"indexCount": 672,
 					"geomId": 3,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"Wood11": {
-					"indexStart": 43698,
-					"indexCount": 24,
-					"geomId": 3,
-					"texId": 0,
-					"uvX": 0.5,
-					"uvY": 0.5,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"tiles_roof3": {
+				"castle/castle_tower02.fbx_tiles_roof": {
 					"indexStart": 43722,
-					"indexCount": 678,
+					"indexCount": 732,
 					"geomId": 3,
 					"texId": 0,
 					"uvX": 0,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"tiles_roof4_2": {
-					"indexStart": 44400,
-					"indexCount": 54,
-					"geomId": 3,
-					"texId": 0,
-					"uvX": 0,
-					"uvY": 0.5,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"Wood5_2": {
+				"castle/castle_wall_arc.fbx_woodplanks": {
 					"indexStart": 44454,
-					"indexCount": 240,
+					"indexCount": 1908,
 					"geomId": 4,
 					"texId": 0,
 					"uvX": 0.5,
 					"uvY": 0.5,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				},
-				"Wood1_2": {
-					"indexStart": 44694,
-					"indexCount": 1668,
-					"geomId": 4,
-					"texId": 0,
-					"uvX": 0.5,
-					"uvY": 0.5,
-					"uvSX": 0.5,
-					"uvSY": 0.5
-				},
-				"props_spe_3": {
+				"castle/castle_wall_arc.fbx_props_spe": {
 					"indexStart": 46362,
 					"indexCount": 13644,
 					"geomId": 4,
@@ -213,9 +156,10 @@
 					"uvX": 0.5,
 					"uvY": 0,
 					"uvSX": 0.125,
-					"uvSY": 0.125
+					"uvSY": 0.125,
+					"configIndex": 0
 				},
-				"stone_wall1_3": {
+				"castle/castle_wall_arc.fbx_stone_wall": {
 					"indexStart": 60006,
 					"indexCount": 1392,
 					"geomId": 4,
@@ -223,29 +167,23 @@
 					"uvX": 0,
 					"uvY": 0,
 					"uvSX": 0.5,
-					"uvSY": 0.5
+					"uvSY": 0.5,
+					"configIndex": 0
 				}
 			},
+			"materialConfigs": [
+				{
+					"mode": "PBR",
+					"blend": "None",
+					"shadows": true,
+					"culling": "Back",
+					"depthTest": "Less",
+					"colorMask": 15,
+					"enableStencil": false
+				}
+			],
 			"texturesCount": 1,
-			"renamedMaterials": {
-				"props_spe": {
-					"castle/castle_tower01.hmd": "props_spe_2",
-					"castle/castle_wall_arc.hmd": "props_spe_3"
-				},
-				"stone_wall1": {
-					"castle/castle_tower01.hmd": "stone_wall1_2",
-					"castle/castle_wall_arc.hmd": "stone_wall1_3"
-				},
-				"tiles_roof4": {
-					"castle/castle_tower02.hmd": "tiles_roof4_2"
-				},
-				"Wood5": {
-					"castle/castle_wall_arc.hmd": "Wood5_2"
-				},
-				"Wood1": {
-					"castle/castle_wall_arc.hmd": "Wood1_2"
-				}
-			},
+			"compress": false,
 			"children": [
 				{
 					"type": "reference",
