@@ -2,3 +2,4 @@
 *.dat
 .tmp
 shaders
+dump
