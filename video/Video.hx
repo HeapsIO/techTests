@@ -4,7 +4,7 @@ class Video extends hxd.App {
 	override function init() {
 		hxd.Res.initEmbed();
 
-		video = new h2d.Video(s2d, 0);
+		video = new h2d.Video(s2d);
 		#if hl
 		//video.loadResource(hxd.Res.splash_screen);
 		video.loadResource(hxd.Res.splash_screen);
