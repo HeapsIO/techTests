@@ -1,4 +1,7 @@
 *.hl
+*.js
+*.js.map
+*.sav
 *.dat
 .tmp
 shaders
