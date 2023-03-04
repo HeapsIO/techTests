@@ -22,15 +22,40 @@ class DriverTest extends hxd.App {
 
 	var current : TestName;
 	var time : Float;
+	var enableMainKeys = true;
 
 	override function init() {
 		current = hxd.Save.load();
 		if( current == null ) current = ClearBackground;
+		haxe.Timer.delay(function() {
+			if( hxd.Timer.frameCount < 2 ) {
+				var prev = current;
+				var forceLoop = false;
+				enableMainKeys = false;
+				hxd.Key.initialize();
+				hxd.System.setLoop(function() {
+					hxd.Timer.update();
+					sevents.checkEvents();
+					updateKeys();
+					if( prev != current || forceLoop ) {
+						prev = current;
+						forceLoop = false;
+						update(hxd.Timer.dt);
+						var dt = hxd.Timer.dt; // fetch again in case it's been modified in update()
+						if( s2d != null ) s2d.setElapsedTime(dt);
+						if( s3d != null ) s3d.setElapsedTime(dt);
+						engine.render(this);
+						forceLoop = true;
+					}
+				});
+			}
+		},1000);
 		initTest();
 	}
 
 	function initTest() {
 		s3d.removeChildren();
+		s3d.renderer = new h3d.scene.fwd.Renderer();
 		time = 0;
 		switch( current ) {
 		case ClearBackground:
@@ -54,6 +79,16 @@ class DriverTest extends hxd.App {
 		case ClearBackground:
 			engine.backgroundColor = Std.int((Math.cos(time * 5) + 1) * 127) | 0xFF000000;
 		default:
+		}
+		if( enableMainKeys )
+			updateKeys();
+	}
+
+	function updateKeys() {
+		if( hxd.Key.isPressed(hxd.Key.ESCAPE) ) {
+			current = TESTS[0];
+			hxd.Save.save(current);
+			initTest();
 		}
 		if( hxd.Key.isPressed(hxd.Key.PGUP) && current.getIndex() > 0 ) {
 			current = TESTS[current.getIndex() - 1];
