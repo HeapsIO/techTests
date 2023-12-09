@@ -3,6 +3,7 @@ enum TestName {
 	SimpleTriangle;
 	UniformParams;
 	UniformParamsGlobals;
+	TexturedTriangle;
 }
 
 class SimpleShader extends hxsl.Shader {
@@ -39,7 +40,6 @@ class ParamGlobalShader extends hxsl.Shader {
 	static var SRC = {
 		@:import h3d.shader.BaseMesh;
 		@param var value : Vec3;
-		@const var useNormal : Bool;
 
 		function vertex() {
 			output.position = vec4(input.position * (1 + vec3(cos(global.time),sin(global.time),0) * 0.1),1);
@@ -50,6 +50,20 @@ class ParamGlobalShader extends hxsl.Shader {
 	}
 }
 
+
+class TextureShader extends hxsl.Shader {
+	static var SRC = {
+		@:import h3d.shader.BaseMesh;
+		@param var tex : Sampler2D;
+
+		function vertex() {
+			output.position = vec4(input.position * (1 + vec3(cos(global.time),sin(global.time),0) * 0.1),1);
+		}
+		function fragment() {
+			output.color = tex.get(input.position.xy * vec2(1.5,-1.5) + vec2(0.5,0));
+		}
+	}
+}
 
 
 class DriverTest extends hxd.App {
@@ -118,6 +132,12 @@ class DriverTest extends hxd.App {
 		case UniformParamsGlobals:
 			var mesh = addTriangle();
 			mesh.material.mainPass.addShader(new ParamGlobalShader());
+		case TexturedTriangle:
+			var mesh = addTriangle();
+			var tex = new TextureShader();
+			tex.tex = hxd.Res.heapsLogo.toTexture();
+			tex.tex.wrap = Repeat;
+			mesh.material.mainPass.addShader(tex);
 		}
 	}
 
@@ -158,6 +178,11 @@ class DriverTest extends hxd.App {
 	}
 
 	static function main() {
+		#if hl
+		hxd.Res.initLocal();
+		#else
+		hxd.Res.initEmbed();
+		#end
 		new DriverTest();
 	}
 
