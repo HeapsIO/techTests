@@ -1,6 +1,8 @@
 enum TestName {
 	ClearBackground;
 	SimpleTriangle;
+	UniformParams;
+	UniformParamsGlobals;
 }
 
 class SimpleShader extends hxsl.Shader {
@@ -14,6 +16,40 @@ class SimpleShader extends hxsl.Shader {
 		}
 	}
 }
+
+
+class ParamShader extends hxsl.Shader {
+	static var SRC = {
+		@:import h3d.shader.BaseMesh;
+
+		@param var value : Vec3;
+		@const var useNormal : Bool;
+
+		function vertex() {
+			output.position = vec4(input.position,1);
+		}
+		function fragment() {
+			output.color = vec4(abs(value) + (useNormal ? input.normal * 0.1 : vec3(0)), 1);
+		}
+	}
+}
+
+
+class ParamGlobalShader extends hxsl.Shader {
+	static var SRC = {
+		@:import h3d.shader.BaseMesh;
+		@param var value : Vec3;
+		@const var useNormal : Bool;
+
+		function vertex() {
+			output.position = vec4(input.position * (1 + vec3(cos(global.time),sin(global.time),0) * 0.1),1);
+		}
+		function fragment() {
+			output.color = vec4(abs(value) + cos(global.time * 40) * 0.1, 1);
+		}
+	}
+}
+
 
 
 class DriverTest extends hxd.App {
@@ -53,23 +89,35 @@ class DriverTest extends hxd.App {
 		initTest();
 	}
 
+	function addTriangle() {
+		var idx = new hxd.IndexBuffer(3);
+		idx.push(0);
+		idx.push(1);
+		idx.push(2);
+		var poly = new h3d.prim.Polygon([new h3d.col.Point(0,0.5,0),new h3d.col.Point(0.7,-0.7,0),new h3d.col.Point(-0.7,-0.7,0)], idx);
+		poly.normals = [new h3d.col.Point(1,1,1),new h3d.col.Point(1,0,0),new h3d.col.Point(0,1,0)];
+		var mesh = new h3d.scene.Mesh(poly,s3d);
+		mesh.material.shadows = false;
+		return mesh;
+	}
+
 	function initTest() {
 		s3d.removeChildren();
 		s3d.renderer = new h3d.scene.fwd.Renderer();
+		engine.backgroundColor = 0;
 		time = 0;
 		switch( current ) {
 		case ClearBackground:
 			// nothing
 		case SimpleTriangle:
-			var idx = new hxd.IndexBuffer(3);
-			idx.push(0);
-			idx.push(1);
-			idx.push(2);
-			var poly = new h3d.prim.Polygon([new h3d.col.Point(0,0.5,0),new h3d.col.Point(0.7,-0.7,0),new h3d.col.Point(-0.7,-0.7,0)], idx);
-			poly.normals = [new h3d.col.Point(1,1,1),new h3d.col.Point(1,0,0),new h3d.col.Point(0,1,0)];
-			var mesh = new h3d.scene.Mesh(poly,s3d);
+			var mesh = addTriangle();
 			mesh.material.mainPass.addShader(new SimpleShader());
-			mesh.material.shadows = false;
+		case UniformParams:
+			var mesh = addTriangle();
+			mesh.material.mainPass.addShader(new ParamShader());
+		case UniformParamsGlobals:
+			var mesh = addTriangle();
+			mesh.material.mainPass.addShader(new ParamGlobalShader());
 		}
 	}
 
@@ -78,6 +126,13 @@ class DriverTest extends hxd.App {
 		switch( current ) {
 		case ClearBackground:
 			engine.backgroundColor = Std.int((Math.cos(time * 5) + 1) * 127) | 0xFF000000;
+		case UniformParams:
+			var p = s3d.getMaterials()[0].mainPass.getShader(ParamShader);
+			p.value.set(Math.cos(time),Math.sin(time),time%1.0);
+			p.useNormal = !p.useNormal;
+		case UniformParamsGlobals:
+			var p = s3d.getMaterials()[0].mainPass.getShader(ParamGlobalShader);
+			p.value.set(Math.cos(time),Math.sin(time),time%1.0);
 		default:
 		}
 		if( enableMainKeys )
