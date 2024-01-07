@@ -8,7 +8,6 @@
 			"name": "HashLink (launch)",
 			"request": "launch",
 			"type": "hl",
-			"hl": "d:/projects/hashlink/x64/Debug/hl.exe",
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": {
 				"type": "haxe",

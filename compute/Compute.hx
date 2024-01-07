@@ -46,6 +46,7 @@ class Compute extends hxd.App {
 		var sh = new BufferView();
 		sh.buffer = buffer;
 		bmp.addShader(sh);
+		bmp.blendMode = None;
 
 		shader = new ComputeShader();
 		shader.buffer = buffer;
@@ -58,7 +59,11 @@ class Compute extends hxd.App {
 	}
 
 	static function main() {
+		#if hldx
 		h3d.impl.DX12Driver.DEBUG = true;
+		#else
+		h3d.impl.GlDriver.enableComputeShaders();
+		#end
 		new Compute();
 	}
 
