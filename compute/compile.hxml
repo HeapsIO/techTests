@@ -1,0 +1,7 @@
+-lib heaps
+-lib hldx
+-D dx12
+-D hl-ver=1.14.0
+-hl out.hl
+-main Compute
+-D shader-debug-dump
