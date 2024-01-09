@@ -24,10 +24,11 @@ class ComputeBufShader extends hxsl.Shader {
 class ComputeTexShader extends hxsl.Shader {
 	static var SRC = {
 		@:import h3d.shader.BaseMesh;
-		@param var tex : RWTexture2D<Vec4>;
+		@param var tex : RWTexture2D<Vec2>;
 		@param var color : Vec4;
 		function main() {
-			tex[computeVar(GlobalInvocation).xy] = vec4(vec2(computeVar(GlobalInvocation).xy) / tex.size(), 0, 1);
+			var iuv = computeVar.globalInvocation.xy;
+			tex.store(iuv, vec2(iuv) / tex.size());
 		}
 	}
 }
@@ -62,7 +63,7 @@ class Compute extends hxd.App {
 		bufShader = new ComputeBufShader();
 		bufShader.buffer = buffer;
 
-		var wtex = new h3d.mat.Texture(256,256,[Writable]);
+		var wtex = new h3d.mat.Texture(256,256,[Writable],RG8);
 		texShader = new ComputeTexShader();
 		texShader.tex = wtex;
 
