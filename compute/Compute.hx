@@ -27,8 +27,9 @@ class ComputeTexShader extends hxsl.Shader {
 		@param var tex : RWTexture2D<Vec2>;
 		@param var color : Vec4;
 		function main() {
+			setLayout(16);
 			var iuv = computeVar.globalInvocation.xy;
-			tex.store(iuv, vec2(iuv) / tex.size());
+			tex.store(iuv, (vec2(iuv) / tex.size()) + sin(vec2(iuv) * global.time * 0.01));
 		}
 	}
 }
@@ -78,7 +79,7 @@ class Compute extends hxd.App {
 		s3d.renderer.computeDispatch(bufShader);
 
 		texShader.color.set(0,1,0.5*Math.random(),1);
-		s3d.renderer.computeDispatch(texShader,Std.int(texShader.tex.width * 0.75), Std.int(texShader.tex.height*0.75));
+		s3d.renderer.computeDispatch(texShader,Std.int(texShader.tex.width * 0.75 / 16), Std.int(texShader.tex.height*0.75));
 
 		super.render(e);
 	}
