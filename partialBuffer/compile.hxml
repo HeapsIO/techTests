@@ -1,0 +1,8 @@
+-lib heaps
+#-lib hldx
+#-D dx12
+-lib hlsdl
+-D hl-ver=1.15.0
+-hl out.hl
+-main PartialBuffer
+-D shader-debug-dump
