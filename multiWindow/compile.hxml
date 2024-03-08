@@ -1,0 +1,6 @@
+-lib heaps
+-lib hlsdl
+-D multidriver
+-hl run.hl
+-main MultiWin
+-D hl-ver=1.15.0
