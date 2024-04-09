@@ -1,0 +1,18 @@
+<css>
+window2 {
+}
+</css>
+
+<params>
+{
+    title:""
+}
+</params>
+
+<special(title)>
+    <text text={title}/>
+</special>
+
+<window2:window>
+    <special("Exit")/>
+</window2>

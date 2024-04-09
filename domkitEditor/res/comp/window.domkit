@@ -1,0 +1,21 @@
+<css>
+window {
+    .actions {
+        hspacing : 10;
+    }
+}
+</css>
+
+<params>
+{
+    show : true,
+}
+</params>
+
+<window>
+    <flow class="actions" if( show )>
+        <button("Ok")/>
+        <button("Cancel")/>
+        <button("Cancel")/>
+    </flow>
+</window>

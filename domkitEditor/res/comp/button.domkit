@@ -1,0 +1,19 @@
+<css>
+button {
+    background : #333;
+    padding : 5 20;
+    text {
+        color : @textColor;
+    }
+}
+</css>
+
+<params>
+{
+    text : "Hello World"
+}
+</params>
+
+<button(text)>
+    <text text={text}/>
+</button>

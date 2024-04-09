@@ -1,0 +1,9 @@
+-lib heaps
+-lib hlsdl
+-lib hide
+-lib domkit
+-lib hscript
+-D hscriptPos
+-hl out.hl
+-main DomkitEditor
+-xml api.xml
