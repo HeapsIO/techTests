@@ -5,12 +5,18 @@ button {
     text {
         color : @textColor;
     }
+    &.disabled {
+        text {
+            color : black;
+        }
+    }
 }
 </css>
 
 <params>
 {
-    text : "Hello World"
+    text : "Hello World",
+    classes : ["disabled"],
 }
 </params>
 
