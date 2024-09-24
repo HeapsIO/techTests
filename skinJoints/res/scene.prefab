@@ -1,0 +1,32 @@
+{
+	"type": "prefab",
+	"children": [
+		{
+			"type": "light",
+			"name": "light",
+			"x": -4.19,
+			"y": -5.64,
+			"z": 11.06,
+			"scaleX": 50,
+			"scaleY": 50,
+			"scaleZ": 50,
+			"rotationY": 57.6,
+			"rotationZ": 53.4,
+			"kind": "Directional",
+			"isMainLight": true,
+			"range": 10,
+			"zNear": 0.02
+		},
+		{
+			"type": "polygon",
+			"name": "Ground",
+			"scaleX": 50,
+			"scaleY": 50,
+			"scaleZ": 50,
+			"kind": 0,
+			"args": [
+				0
+			]
+		}
+	]
+}

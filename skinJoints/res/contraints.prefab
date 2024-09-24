@@ -1,0 +1,51 @@
+{
+	"type": "prefab",
+	"children": [
+		{
+			"type": "model",
+			"name": "Root",
+			"source": "character/Kobold01/Model.FBX",
+			"animation": "character/Kobold01/Anim_attack01.FBX"
+		},
+		{
+			"type": "model",
+			"name": "Child",
+			"source": "character/Kobold01/Model.FBX",
+			"animation": "character/Kobold01/Anim_attack01.FBX"
+		},
+		{
+			"type": "box",
+			"name": "boxA",
+			"z": 1,
+			"scaleX": 0.1,
+			"scaleY": 0.1,
+			"scaleZ": 2
+		},
+		{
+			"type": "box",
+			"name": "boxB",
+			"z": 1,
+			"scaleX": 0.1,
+			"scaleY": 0.1,
+			"scaleZ": 2
+		},
+		{
+			"type": "constraint",
+			"name": "contraintRootChild",
+			"object": "Child",
+			"target": "Root.Bip001.Bip001 Pelvis.Bip001 Spine.Bip001 Spine1.Bip001 Neck.Bip001 R Clavicle.Bip001 R UpperArm.Bip001 R Forearm.Bip001 R Hand.Bone_Weapon_Hand01"
+		},
+		{
+			"type": "constraint",
+			"name": "ConstraintChildBoxA",
+			"object": "boxA",
+			"target": "Child.Bip001.Bip001 Pelvis.Bip001 Spine.Bip001 Spine1.Bip001 Neck.Bip001 L Clavicle.Bip001 L UpperArm.Bip001 L Forearm.Bip001 L Hand.Bone_Weapon_Hand02"
+		},
+		{
+			"type": "constraint",
+			"name": "ConstraintChildBoxB",
+			"object": "boxB",
+			"target": "Child.Bip001.Bip001 Pelvis.Bip001 Spine.Bip001 Spine1.Bip001 Neck.Bip001 R Clavicle.Bip001 R UpperArm.Bip001 R Forearm.Bip001 R Hand.Bone_Weapon_Hand01"
+		}
+	]
+}
