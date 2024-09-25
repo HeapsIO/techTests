@@ -7,16 +7,30 @@ class ObjectDebugger extends h3d.scene.Object {
 	var target: h3d.scene.Object = null;
 	public var autoSync : Bool = false;
 
-	public function new(name: String, color: Int, target: h3d.scene.Object, scene: h3d.scene.Scene, s2d: h2d.Scene) {
+	public function new(name: String, color: Int, target: h3d.scene.Object, scene: h3d.scene.Scene, s2d: h2d.Scene, offset: Float = 0.0) {
 		super(scene);
 		this.target = target;
 		this.name = name;
 
 		sphere = new h3d.scene.Sphere(color, 0.10, this);
 		follow2d = new h2d.ObjectFollower(this, s2d);
-		text = new h2d.Text(hxd.res.DefaultFont.get(), follow2d);
+		var flow = new h2d.Flow(follow2d);
+		flow.verticalAlign = Middle;
+		flow.horizontalAlign = Middle;
+		flow.y += offset;
+
+		if (offset > 0) {
+			var g = new h2d.Graphics(follow2d);
+			g.lineStyle(1, color, 1.0);
+			g.moveTo(0,0);
+			g.lineTo(0, offset);
+		}
+		flow.padding = 2;
+		flow.backgroundTile = h2d.Tile.fromColor(0xFF000000);
+
+		text = new h2d.Text(hxd.res.DefaultFont.get(), flow);
 		text.color.setColor(color);
-		text.textAlign = Center;
+		//text.textAlign = Center;
 		//text.dropShadow = {dx: 1, dy: 1, color: 0x000000, alpha: 1.0};
 		update();
 	}
@@ -27,10 +41,10 @@ class ObjectDebugger extends h3d.scene.Object {
 		text.text = '$name';
 	}
 
-	override function emit(ctx:h3d.scene.RenderContext) {
+	override function syncRec(ctx:h3d.scene.RenderContext) {
 		if (autoSync)
 			update();
-		super.emit(ctx);
+		super.syncRec(ctx);
 	}
 
 	override function onRemove() {
@@ -39,15 +53,58 @@ class ObjectDebugger extends h3d.scene.Object {
 	}
 }
 
+class ObjectChecker extends h3d.scene.Object {
+	var a: h3d.scene.Object;
+	var b: h3d.scene.Object;
+	var isFirstFrame = true;
+	public var isOkFirstFrame = true;
+	public var isOk = true;
+	public var isSameAsPreviousFrame = true;
+
+	var prevFrame : h3d.Matrix;
+
+	public function new(a: h3d.scene.Object, b: h3d.scene.Object, name: String) {
+		this.a = a;
+		this.b = b;
+		this.name = name;
+
+		super(a.getScene());
+	}
+
+	override function emit(ctx) {
+		var d = hxd.Math.distance(a.absPos.tx - b.absPos.tx, a.absPos.ty - b.absPos.ty, a.absPos.tz - b.absPos.tz);
+
+		if (isFirstFrame) {
+			isOkFirstFrame = d < hxd.Math.EPSILON;
+		} else {
+			isOk = isOk && d < hxd.Math.EPSILON;
+
+			if (!isOk) {
+				var d = hxd.Math.distance(a.absPos.tx - prevFrame.tx, a.absPos.ty - prevFrame.ty, a.absPos.tz - prevFrame.tz);
+				isSameAsPreviousFrame = isSameAsPreviousFrame && d < hxd.Math.EPSILON;
+			}
+		}
+		prevFrame = b.absPos.clone();
+		isFirstFrame = false;
+	}
+}
+
 class Main extends hxd.App {
 
 	public var updateFunctions : Array<() -> Void> = [];
+	public var checkers : Array<ObjectChecker> = [];
+	var checkerDisplay : h2d.Flow;
 
 	override function init() {
 		super.init();
 		new h3d.scene.CameraController(20.0, s3d);
 
 		var scene = loadScene("scene.prefab");
+
+		checkerDisplay = new h2d.Flow(s2d);
+		checkerDisplay.backgroundTile = h2d.Tile.fromColor(0, 1,1, 0.75);
+		checkerDisplay.layout = Vertical;
+		checkerDisplay.padding = 4;
 
 		placeAtRoot();
 		placedThenMoved();
@@ -68,10 +125,11 @@ class Main extends hxd.App {
 				model.currentAnimation.speed = 0.0;
 			}
 		}
-		new ObjectDebugger("Place At Root", 0xFF000000, root3d, s3d, s2d).autoSync = true;
+		var name = "Place At Root";
+		new ObjectDebugger(name, 0xFFFFFFFF, root3d, s3d, s2d).autoSync = true;
 
 		var root : h3d.scene.Object = root3d.getObjectByName("Root");
-		createDebug(root3d);
+		createDebug(root3d, name);
 	}
 
 	/**
@@ -86,12 +144,13 @@ class Main extends hxd.App {
 				model.currentAnimation.speed = 0.0;
 			}
 		}
+		var name = "Placed Then Moved";
 		root3d.setPosition(0,5,0);
-		new ObjectDebugger("Placed Then Moved", 0xFF000000, root3d, s3d, s2d);
+		new ObjectDebugger(name, 0xFFFFFFFF, root3d, s3d, s2d);
 
-		createDebug(root3d);
+		createDebug(root3d, false, null);
 		root3d.setPosition(0,5.5,0);
-		createDebug(root3d);
+		createDebug(root3d, name);
 
 	}
 
@@ -106,10 +165,11 @@ class Main extends hxd.App {
 			model.stopAnimation(true);
 		}
 		root3d.setPosition(0,-5,0);
-		new ObjectDebugger("TPose", 0xFF000000, root3d, s3d, s2d).autoSync = true;
+		var name = "TPose";
+		new ObjectDebugger(name, 0xFFFFFFFF, root3d, s3d, s2d).autoSync = true;
 
 		var root : h3d.scene.Object = root3d.getObjectByName("Root");
-		createDebug(root3d);
+		createDebug(root3d, name);
 	}
 
 	/**
@@ -125,35 +185,70 @@ class Main extends hxd.App {
 			}
 		}
 
+		var name = "Animated";
 		root3d.setPosition(5,0,0);
-		new ObjectDebugger("Animated", 0xFF000000, root3d, s3d, s2d).autoSync = true;
+		new ObjectDebugger(name, 0xFFFFFFFF, root3d, s3d, s2d).autoSync = true;
 
 		var root : h3d.scene.Object = root3d.getObjectByName("Root");
-		createDebug(root3d, true);
+		createDebug(root3d, true, name);
 	}
 
-	function createDebug(root3d: h3d.scene.Object, runUpdate: Bool = false) {
+	function createDebug(root3d: h3d.scene.Object, runUpdate: Bool = false, checkName: String) {
 		var root = root3d.getObjectByName("Root");
 		var rootHand01 : h3d.scene.Skin.Joint = cast root.getObjectByName("Bone_Weapon_Hand01");
 		var child : h3d.scene.Object = root3d.getObjectByName("Child");
 		var childHand01 = child.getObjectByName("Bone_Weapon_Hand01");
 
-		var a = new ObjectDebugger("root->hand01", 0xFFFF0000, rootHand01, s3d, s2d);
-		var b = new ObjectDebugger("child->hand01", 0xFF00FF00, childHand01, s3d, s2d);
+		var rootHand = new ObjectDebugger("root->hand01", 0xFFFF0000, rootHand01, s3d, s2d);
+		var childHand = new ObjectDebugger("child->hand01", 0xFF00FF00, childHand01, s3d, s2d);
 
 		if (runUpdate) {
-			updateFunctions.push(() -> a.update());
-			updateFunctions.push(() -> b.update());
+			updateFunctions.push(() -> rootHand.update());
+			updateFunctions.push(() -> childHand.update());
 		}
 
-		new ObjectDebugger("\nupdate root->hand01", 0xFFFF00FF, rootHand01, s3d, s2d).autoSync = true;
-		new ObjectDebugger("\nupdate child->hand01", 0xFF00FFFF, childHand01, s3d, s2d).autoSync = true;
+		var rootHandUpdate = new ObjectDebugger("update root->hand01", 0xFFFF00FF, rootHand01, s3d, s2d, 16.0);
+		rootHandUpdate.autoSync = true;
+		var childHandUpdate = new ObjectDebugger("update child->hand01", 0xFF00FFFF, childHand01, s3d, s2d, 16.0);
+		childHandUpdate.autoSync = true;
+
+		if (checkName != null) {
+			checkers.push(new ObjectChecker(rootHand, rootHandUpdate, '$checkName:root'));
+			checkers.push(new ObjectChecker(childHand, childHandUpdate, '$checkName:child'));
+		}
 	}
 
 
 	override function update(dt:Float) {
 		for (func in updateFunctions) {
 			func();
+		}
+
+		checkerDisplay.removeChildren();
+		for (checker in checkers) {
+			var txt = new h2d.Text(hxd.res.DefaultFont.get(), checkerDisplay);
+			txt.text = checker.name;
+
+			switch([checker.isOkFirstFrame, checker.isOk, checker.isSameAsPreviousFrame]) {
+				case [true, true, _]:
+					txt.color.setColor(0xFF00FF00);
+					txt.text +=" OK";
+				case [false, true, _]:
+					txt.color.setColor(0xFFFF00FF);
+					txt.text +=" ERR First Frame/OK Update";
+				case [true, false, false]:
+					txt.color.setColor(0xFFFF00FF);
+					txt.text +=" OK First Frame/ERR Update";
+				case [true, false, true]:
+					txt.color.setColor(0xFFFFFF00);
+					txt.text +=" OK First Frame/1Frame delay Update";
+				case [false, false, true]:
+					txt.color.setColor(0xFFFFFF00);
+					txt.text +=" ERR First Frame/1Frame delay Update";
+				case [false, false, false]:
+					txt.color.setColor(0xFFFF0000);
+					txt.text +=" ERR";
+			}
 		}
 	}
 
