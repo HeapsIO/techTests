@@ -4,6 +4,7 @@ enum TestName {
 	UniformParams;
 	UniformParamsGlobals;
 	TexturedTriangle;
+	SamplingValues;
 }
 
 class SimpleShader extends hxsl.Shader {
@@ -117,8 +118,9 @@ class DriverTest extends hxd.App {
 
 	function initTest() {
 		s3d.removeChildren();
+		s2d.removeChildren();
 		s3d.renderer = new h3d.scene.fwd.Renderer();
-		engine.backgroundColor = 0;
+		engine.backgroundColor = 0xFF002030;
 		time = 0;
 		switch( current ) {
 		case ClearBackground:
@@ -138,6 +140,17 @@ class DriverTest extends hxd.App {
 			tex.tex = hxd.Res.heapsLogo.toTexture();
 			tex.tex.wrap = Repeat;
 			mesh.material.mainPass.addShader(tex);
+		case SamplingValues:
+			var f = new h2d.Flow(s2d);
+			f.fillWidth = f.fillHeight = true;
+			f.horizontalAlign = f.verticalAlign = Middle;
+			var t = h2d.Tile.fromTexture(h3d.mat.Texture.genChecker(16));
+			var b1 = new h2d.Bitmap(t, f);
+			var b2 = new h2d.Bitmap(t, f);
+			b1.smooth = true;
+			b2.smooth = false;
+			b1.scale(6);
+			b2.scale(6);
 		}
 	}
 

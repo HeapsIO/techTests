@@ -3,3 +3,4 @@
 -main DriverTest
 --debug
 -D webgpu
+-D debug-shaders
