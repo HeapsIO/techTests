@@ -1,3 +1,5 @@
+import DriverTestShaders;
+
 enum TestName {
 	ClearBackground;
 	SimpleTriangle;
@@ -5,67 +7,12 @@ enum TestName {
 	UniformParamsGlobals;
 	TexturedTriangle;
 	SamplingValues;
+	CubeLight;
+	RenderTarget;
+	MRT;
+	CubeTexture;
+	TextureArray;
 }
-
-class SimpleShader extends hxsl.Shader {
-	static var SRC = {
-		@:import h3d.shader.BaseMesh;
-		function vertex() {
-			output.position = vec4(input.position,1);
-		}
-		function fragment() {
-			output.color = vec4(input.normal, 1);
-		}
-	}
-}
-
-
-class ParamShader extends hxsl.Shader {
-	static var SRC = {
-		@:import h3d.shader.BaseMesh;
-
-		@param var value : Vec3;
-		@const var useNormal : Bool;
-
-		function vertex() {
-			output.position = vec4(input.position,1);
-		}
-		function fragment() {
-			output.color = vec4(abs(value) + (useNormal ? input.normal * 0.1 : vec3(0)), 1);
-		}
-	}
-}
-
-
-class ParamGlobalShader extends hxsl.Shader {
-	static var SRC = {
-		@:import h3d.shader.BaseMesh;
-		@param var value : Vec3;
-
-		function vertex() {
-			output.position = vec4(input.position * (1 + vec3(cos(global.time),sin(global.time),0) * 0.1),1);
-		}
-		function fragment() {
-			output.color = vec4(abs(value) + cos(global.time * 40) * 0.1, 1);
-		}
-	}
-}
-
-
-class TextureShader extends hxsl.Shader {
-	static var SRC = {
-		@:import h3d.shader.BaseMesh;
-		@param var tex : Sampler2D;
-
-		function vertex() {
-			output.position = vec4(input.position * (1 + vec3(cos(global.time),sin(global.time),0) * 0.1),1);
-		}
-		function fragment() {
-			output.color = tex.get(input.position.xy * vec2(1.5,-1.5) + vec2(0.5,0));
-		}
-	}
-}
-
 
 class DriverTest extends hxd.App {
 
@@ -116,10 +63,37 @@ class DriverTest extends hxd.App {
 		return mesh;
 	}
 
+	function addCube() {
+		var m = new h3d.scene.Mesh(h3d.prim.Cube.defaultUnitCube(), s3d);
+		m.material.shadows = false;
+		return m;
+	}
+
+	function addSphere() {
+		var m = new h3d.scene.Mesh(h3d.prim.Sphere.defaultUnitSphere(), s3d);
+		m.material.shadows = false;
+		return m;
+	}
+
+	function addLight() {
+		var l = new h3d.scene.fwd.DirLight(new h3d.Vector(1,-2,-4),s3d);
+		return l;
+	}
+
+	function initPbr() {
+		var render = new h3d.scene.pbr.Renderer();
+		s3d.renderer = render;
+		s3d.lightSystem = new h3d.scene.pbr.LightSystem();
+		h3d.mat.PbrMaterialSetup.set();
+		return render;
+	}
+
 	function initTest() {
 		s3d.removeChildren();
 		s2d.removeChildren();
 		s3d.renderer = new h3d.scene.fwd.Renderer();
+		s3d.lightSystem = new h3d.scene.pbr.LightSystem();
+		h3d.mat.MaterialSetup.current = new h3d.mat.MaterialSetup("default");
 		engine.backgroundColor = 0xFF002030;
 		time = 0;
 		switch( current ) {
@@ -151,6 +125,47 @@ class DriverTest extends hxd.App {
 			b2.smooth = false;
 			b1.scale(6);
 			b2.scale(6);
+		case CubeLight:
+			addLight();
+			addCube();
+		case RenderTarget:
+			var b = new h2d.Bitmap(hxd.Res.heapsLogo.toTile(), s2d);
+			b.x = b.y = 100;
+			var m = new h3d.Matrix();
+			m.identity();
+			m.colorSaturate(-0.7);
+			b.filter = new h2d.filter.ColorMatrix(m);
+		case MRT:
+			s3d.renderer = new MRTRenderer();
+			addLight();
+			addCube();
+			var bmp = new h2d.Bitmap(h2d.Tile.fromColor(0xFF00FF,100,100), s2d);
+		case CubeTexture:
+			var m = addSphere();
+			addLight();
+			var c = new h3d.mat.Texture(1,1,[Cube]);
+			for( i => v in [0xFF0000,0xFF00,0xFF,0xFF00FF,0xFFFF,0xFFFF00] ) {
+				var p = hxd.Pixels.alloc(1,1,RGBA);
+				p.setPixel(0,0,v);
+				c.uploadPixels(p,0,i);
+			}
+			m.material.mainPass.addShader(new CubeTextureMap(c));
+		case TextureArray:
+			var m = addSphere();
+			addLight();
+			var c = new h3d.mat.TextureArray(1,1,4,[Target]);
+			for( i => v in [0xFFFFFF, 0xFF0000,0xFF00,0xFF] ) {
+				haxe.Timer.delay(function() {
+					// fallback if clear doesn't work and to test if manual upload is supported
+					var p = hxd.Pixels.alloc(1,1,RGBA);
+					p.setPixel(0,0,(v&0x7F7F7F)|0xFF000000);
+					c.uploadPixels(p,0,i);
+				},1000);
+				engine.driver.setRenderTarget(c, i);
+				engine.driver.clear(h3d.Vector.fromColor(v|0xFF000000));
+			}
+			engine.driver.setRenderTarget(null);
+			m.material.mainPass.addShader(new ArrayTextureMap(c));
 		}
 	}
 
@@ -166,6 +181,12 @@ class DriverTest extends hxd.App {
 		case UniformParamsGlobals:
 			var p = s3d.getMaterials()[0].mainPass.getShader(ParamGlobalShader);
 			p.value.set(Math.cos(time),Math.sin(time),time%1.0);
+		case MRT:
+			var t = @:privateAccess s3d.renderer.ctx.textures.getNamed(Std.int(time*2)%2 == 0 ? "normal" : "albedo");
+			if( t != null )
+				cast(s2d.getChildAt(0),h2d.Bitmap).tile = h2d.Tile.fromTexture(t);
+		case CubeTexture, TextureArray:
+			s3d.getChildAt(0).rotate(0,0,dt);
 		default:
 		}
 		if( enableMainKeys )
@@ -197,6 +218,25 @@ class DriverTest extends hxd.App {
 		hxd.Res.initEmbed();
 		#end
 		new DriverTest();
+	}
+
+}
+
+class MRTRenderer extends h3d.scene.fwd.Renderer {
+
+	var output = new h3d.pass.Output("default",[
+		Value("pixelColor"),
+		Vec4([Value("transformedNormal"),Const(1)])
+	]);
+
+	override function render() {
+		var albedo = allocTarget("albedo", true, 1.);
+		var normal = allocTarget("normal", true, 1.);
+		setTargets([albedo,normal]);
+		clear(0, 1, 0);
+		output.setContext(ctx);
+		renderPass(output,get("default"));
+		resetTarget();
 	}
 
 }
