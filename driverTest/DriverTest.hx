@@ -162,7 +162,7 @@ class DriverTest extends hxd.App {
 					c.uploadPixels(p,0,i);
 				},1000);
 				engine.driver.setRenderTarget(c, i);
-				engine.driver.clear(h3d.Vector.fromColor(v|0xFF000000));
+				engine.driver.clear(h3d.Vector4.fromColor(v|0xFF000000));
 			}
 			engine.driver.setRenderTarget(null);
 			m.material.mainPass.addShader(new ArrayTextureMap(c));
