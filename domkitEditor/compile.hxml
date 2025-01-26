@@ -7,3 +7,6 @@
 -hl out.hl
 -main DomkitEditor
 -xml api.xml
+-cp res
+--macro hrt.impl.DomkitViewer.init()
+--macro domkit.Macros.registerComponentsPath("$")

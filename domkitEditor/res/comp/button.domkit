@@ -2,13 +2,16 @@
 button {
     background : #333;
     padding : 5 20;
+	cursor : button;
     text {
         color : @textColor;
     }
     &.disabled {
+		cursor : default;
         text {
-            color : black;
+            color : #555;
         }
+		background : #222;
     }
 }
 </css>
@@ -20,6 +23,6 @@ button {
 }
 </params>
 
-<button(text)>
+<button(text:String)>
     <text text={text}/>
 </button>
