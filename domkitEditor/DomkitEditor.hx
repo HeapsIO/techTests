@@ -3,6 +3,20 @@ import hrt.impl.DomkitViewer;
 class Base extends h2d.Flow implements h2d.domkit.Object {
 }
 
+enum GfxType {
+	A;
+	B;
+	C( x : Float );
+}
+
+class Gfx extends Base {
+	public function new(type:GfxType,?parent) {
+		super(parent);
+		initComponent();
+		dom.addClass(type.getName().toLowerCase());
+	}
+}
+
 /*
 @:source("comp/button")
 class Button extends Base {
@@ -52,7 +66,7 @@ class DomkitEditor extends hxd.App {
 		root.layout = Stack;
 		style.addObject(root);
 
-		var viewer = new DomkitViewer(style, hxd.Res.comp.window2, s2d);
+		var viewer = new DomkitViewer(style, hxd.Res.comp.enumTest, s2d);
 		viewer.addComponentsPath("comp");
 
 		//new Window2(root);
