@@ -1,0 +1,26 @@
+{
+	"sheets": [
+		{
+			"name": "icon",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "id",
+					"scope": null
+				}
+			],
+			"lines": [
+				{
+					"id": "Ok"
+				},
+				{
+					"id": "Bad"
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

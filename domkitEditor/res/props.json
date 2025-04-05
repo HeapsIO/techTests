@@ -2,5 +2,10 @@
 	"script.api.files" : ["../api.xml"],
 	"less.includes" : ["vars.less"],
 	"domkit.parsers" : [],
-	"domkit.components" : ["comp"]
+	"domkit.components" : ["comp"],
+	"script.api": {
+		"domkit": {
+			"cdbEnums": ["icon"]
+		}
+	}
 }

@@ -3,6 +3,7 @@
 -lib hide
 -lib domkit
 -lib hscript
+-lib castle
 -D hscriptPos
 -hl out.hl
 -main DomkitEditor

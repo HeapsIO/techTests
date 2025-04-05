@@ -10,10 +10,11 @@ enum GfxType {
 }
 
 class Gfx extends Base {
-	public function new(type:GfxType,?parent) {
+	public function new(type:GfxType,?icon:Data.IconKind,?parent) {
 		super(parent);
 		initComponent();
 		dom.addClass(type.getName().toLowerCase());
+		if( icon != null ) dom.addClass(icon.toString().toLowerCase());
 	}
 }
 
@@ -49,6 +50,30 @@ class Window2 extends Window {
 }
 */
 
+typedef ApiData = { color : Int };
+
+@:source("comp/apiTest.api-test")
+class ApiTest extends Base {
+	var color : Int;
+	public function new( color : Int, ?parent ) {
+		super(parent);
+		this.color = color;
+		initComponent();
+	}
+	public function getData() {
+		return { color : color };
+	}
+}
+
+class ApiSub extends Base {
+	public function new( api : ApiTest, data : ApiData, ?parent ) {
+		super(parent);
+		initComponent();
+		api.dom.initAttributes({ background : "#"+StringTools.hex(api.getData().color) });
+		dom.initAttributes({ background : "#"+StringTools.hex(data.color) });
+	}
+}
+
 class DomkitEditor extends hxd.App {
 
 	var style : DomkitStyle;
@@ -66,7 +91,8 @@ class DomkitEditor extends hxd.App {
 		root.layout = Stack;
 		style.addObject(root);
 
-		var viewer = new DomkitViewer(style, hxd.Res.comp.enumTest, s2d);
+		var viewer = new DomkitViewer(style, hxd.Res.comp.apiTest, s2d);
+		viewer.addCDB(Data.icon);
 		viewer.addComponentsPath("comp");
 
 		//new Window2(root);
@@ -79,6 +105,7 @@ class DomkitEditor extends hxd.App {
 	static function main() {
 		hxd.res.Resource.LIVE_UPDATE = true;
 		hxd.Res.initLocal();
+		Data.load(hxd.Res.data.entry.getText());
 		new DomkitEditor();
 	}
 

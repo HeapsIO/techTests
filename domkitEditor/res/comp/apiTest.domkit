@@ -1,0 +1,48 @@
+<css>
+api-sub {
+	width : 100;
+	height : 100;
+}
+api-test {
+	background : red;
+	padding : 20;
+
+	.border {
+		padding : 10;
+		background : white;
+	}
+
+	gfx {
+		padding : 20;
+	}
+	gfx.a {
+		background : red;
+	}
+	gfx.c {
+		background : blue;
+	}
+	gfx.ok {
+		background : green;
+	}
+
+}
+</css>
+
+<params>
+{
+    color : 0x802080,
+}
+</params>
+
+<enums>
+[{"path":"GfxType","constrs":["A","C"]},{"path":"$cdb","constrs":["Icon"]}]
+</enums>
+
+<api-test>
+	<flow class="border">
+		<api-sub(this,getData())/>
+	</flow>
+	<gfx(A)/>
+	<gfx(C(5))/>
+	<gfx(A, Icon.Ok)/>
+</api-test>
