@@ -1,0 +1,5 @@
+-lib heaps
+-lib hlsdl
+-lib domkit
+-hl out.hl
+-main Main
