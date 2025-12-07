@@ -1,0 +1,13 @@
+-lib heaps
+-lib hlsdl
+-lib domkit
+-lib hscript
+-lib castle
+-D hscriptPos
+-hl out.hl
+-main DomkitStudio
+-xml api.xml
+-cp res
+--macro domkit.Macros.allowInterp()
+--macro domkit.Macros.registerComponentsPath("$")
+#-D dump=pretty
