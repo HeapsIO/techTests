@@ -1,0 +1,7 @@
+-lib hscript
+-D hscriptPos
+-hl out.hl
+-main LiveClass
+-xml api.xml
+--macro hscript.LiveClass.enable("api.xml",["."])
+-D dump=pretty

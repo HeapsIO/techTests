@@ -1,0 +1,4 @@
+{
+	"less.compile": { "out": false },
+	"less.validate": false,
+}
