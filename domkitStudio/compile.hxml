@@ -8,6 +8,7 @@
 -main DomkitStudio
 -xml api.xml
 -cp res
+--macro hscript.LiveClass.enable("api.xml",["."])
 --macro domkit.Macros.allowInterp()
 --macro domkit.Macros.registerComponentsPath("$")
 #-D dump=pretty

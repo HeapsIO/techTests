@@ -65,8 +65,11 @@ class DomkitStudio extends hxd.App {
 
 		style = new h2d.domkit.Style();
 		style.loadComponents("style",[hxd.Res.style.vars]);
-		style.watchInterpComponents("api.xml",["."]);
+		style.watchInterpComponents();
 		style.allowInspect = true;
+
+		@:privateAccess TestComp.__INTERP = true;
+		domkit.Interp.onError = null; // throw exceptions
 
 		root = new Root(s2d);
 		style.addObject(root);
