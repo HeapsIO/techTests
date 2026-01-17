@@ -1,0 +1,9 @@
+-lib heaps
+-lib hlsdl
+-lib hxbit
+-hl main.hl
+-D dump=pretty
+-main Main
+-D hxbit-visibility
+-D hxbit64
+--macro hxbit.Macros.initVisibility(["server","owner"])
